@@ -1,8 +1,17 @@
 .product {
+  position: relative;
+  z-index: 3;
+  background: #fff;
+  padding: 0 10px;
+  margin-top: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
   display: grid;
   padding: 10px 15px;
   margin: 0.5rem;
   border-radius: 0.25rem;
+  transition: transform 450ms;
+  margin-top: 80px;
 }
 
 .product .product__container {
@@ -38,11 +47,11 @@
   margin-top: 6px;
 }
 
-/* .product .product__price {
+.product .product__price {
   text-align: left;
   line-height: 16px;
   font-weight: 500;
-} */
+}
 
 .product .product__mrp {
   text-decoration: line-through;
@@ -57,4 +66,8 @@
   font-weight: 400;
   font-size: 12px;
   margin-left: 5px;
+}
+
+.product:hover {
+  box-shadow: 4px 10px 5px 0px rgba(0, 0, 0, 0.5);
 }
