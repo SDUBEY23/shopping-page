@@ -8,6 +8,8 @@ const Product = ({
   productName,
   price,
   searchImage,
+  onChange,
+  value,
 }) => {
   return (
     <article className="product">

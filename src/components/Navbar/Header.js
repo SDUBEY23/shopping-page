@@ -1,7 +1,7 @@
 import React from "react";
 import "./header.css";
 
-const Header = () => {
+const Header = ({ onChange, value }) => {
   return (
     <div className="header">
       <div className="header__container">
@@ -9,7 +9,7 @@ const Header = () => {
           <li className="header__listItem">MEN</li>
           <li className="header__listItem">WOMEN</li>
           <li className="header__listItem">KIDS</li>
-          <li className="header__listItem">Home & LIVING</li>
+          <li className="header__listItem">HOME & LIVING</li>
           <li className="header__listItem">OFFERS</li>
         </ul>
       </div>
@@ -19,6 +19,8 @@ const Header = () => {
           type="text"
           className="header__searchBar"
           placeholder="Search for products"
+          value={value}
+          onChange={onChange}
         />
       </div>
     </div>
