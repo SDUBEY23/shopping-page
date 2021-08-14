@@ -7,6 +7,9 @@ import SideFilters from "./components/SideFilters/SideFilters";
 
 function App() {
   const [productList, setProductList] = useState([]);
+  const [sideFilter, setSideFilder] = useState({
+    gender: [],
+  });
 
   useEffect(() => {
     async function fetchProducts() {
@@ -21,18 +24,39 @@ function App() {
   console.log(productList);
 
   const handleSearch = (e) => {
+    let newProductList = [...productList];
+    console.log(newProductList);
     if (e.target.value === "") {
       return setProductList(productList);
     } else {
       return setProductList(
-        productList.filter((x) => x.product.includes(e.target.value))
+        newProductList.filter((x) => x.product.includes(e.target.value))
+      );
+    }
+  };
+
+  const handleFilters = (filters, category) => {
+    let newProductList = [...productList];
+    console.log(newProductList);
+    if (filters.length === 0) {
+      setProductList(productList);
+    } else {
+      console.log(filters);
+      const newFilter = { ...sideFilter };
+      newFilter[category] = filters;
+      setSideFilder(newFilter);
+      console.log(sideFilter);
+      return setProductList(
+        productList.filter((x) => x.gender.includes(filters))
       );
     }
   };
   return (
     <div className="App">
       <Header onChange={(e) => handleSearch(e)} />
-      <SideFilters />
+      <SideFilters
+        handleFilters={(filters) => handleFilters(filters, "gender")}
+      />
       <ProductList list={productList} />
     </div>
   );
