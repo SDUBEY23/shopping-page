@@ -1,0 +1,12 @@
+.productList {
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr); */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: stretch;
+  margin: 0 -10px 0 3px;
+  width: 100%;
+}
