@@ -3,7 +3,9 @@ import "./App.css";
 import axios from "axios";
 import ProductList from "./components/ProductList";
 import Header from "./components/Navbar/Header";
-import SideFilters from "./components/SideFilters/SideFilters";
+import GenderFilter from "./components/SideFilters/GenderFilter";
+import CategoryFilter from "./components/SideFilters/CategoryFilter";
+import BrandFilter from "./components/SideFilters/BrandFilter";
 
 function App() {
   const [productList, setProductList] = useState([]);
@@ -44,7 +46,7 @@ function App() {
   //     );
   //   }
   // };
-  const handleFilters = (filters, category) => {
+  const handleGenderFilters = (filters, category) => {
     setSearch(true);
     if (filters.length !== 0) {
       const newFilter = { ...sideFilter };
@@ -53,6 +55,39 @@ function App() {
       const newFilteredProductList = productList.filter((product) => {
         // return x.gender.includes(filters);
         return Object.values(product.gender).join("").includes(filters);
+      });
+      console.log(newFilteredProductList);
+      setSearchResult(newFilteredProductList);
+    } else {
+      setSearchResult(productList);
+    }
+  };
+
+  const handleCategoryFilters = (filters, category) => {
+    setSearch(true);
+    if (filters.length !== 0) {
+      const newFilter = { ...sideFilter };
+      newFilter[category] = filters;
+      setSideFilder(newFilter);
+      const newFilteredProductList = productList.filter((product) => {
+        // return x.gender.includes(filters);
+        return Object.values(product.category).join("").includes(filters);
+      });
+      console.log(newFilteredProductList);
+      setSearchResult(newFilteredProductList);
+    } else {
+      setSearchResult(productList);
+    }
+  };
+  const handleBrandFilters = (filters, category) => {
+    setSearch(true);
+    if (filters.length !== 0) {
+      const newFilter = { ...sideFilter };
+      newFilter[category] = filters;
+      setSideFilder(newFilter);
+      const newFilteredProductList = productList.filter((product) => {
+        // return x.gender.includes(filters);
+        return Object.values(product.brand).join("").includes(filters);
       });
       console.log(newFilteredProductList);
       setSearchResult(newFilteredProductList);
@@ -77,8 +112,18 @@ function App() {
   return (
     <div className="App">
       <Header term={searchProduct} searchKeyword={searchHandler} />
-      <SideFilters
-        handleFilters={(filters) => handleFilters(filters, "gender")}
+      <GenderFilter
+        handleGenderFilters={(filters) =>
+          handleGenderFilters(filters, "gender")
+        }
+      />
+      <CategoryFilter
+        handleCategoryFilters={(filters) =>
+          handleCategoryFilters(filters, "category")
+        }
+      />
+      <BrandFilter
+        handleBrandFilters={(filters) => handleBrandFilters(filters, "brand")}
       />
       {search ? (
         <ProductList

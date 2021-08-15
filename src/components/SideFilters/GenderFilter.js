@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./filter.css";
-import CheckboxFilter from "../CheckboxFilters/CheckboxFilter";
 
 const gender = ["Men", "Women", "Unisex"];
 
-const SideFilters = (props) => {
+const GenderFilter = (props) => {
   const [checked, setChecked] = useState([]);
   const handleToggle = (item) => {
     const currentIndex = checked.indexOf(item);
@@ -16,7 +15,7 @@ const SideFilters = (props) => {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
-    props.handleFilters(newChecked);
+    props.handleGenderFilters(newChecked);
   };
   return (
     <section className="side-filters">
@@ -44,22 +43,8 @@ const SideFilters = (props) => {
           );
         })}
       </div>
-      <div className="filter-categories categories-container">
-        <span className="vertical-filterHeader">CATEGORY</span>
-        <CheckboxFilter category="Shirt" />
-        <CheckboxFilter category="Tshirt" />
-        <CheckboxFilter category="Jeans" />
-        <CheckboxFilter category="Jacket" />
-      </div>
-      <div className="filter-categories categories-container">
-        <span className="vertical-filterHeader">Brands</span>
-        <CheckboxFilter category="Puma" />
-        <CheckboxFilter category="Roadster" />
-        <CheckboxFilter category="Mayra" />
-        <CheckboxFilter category="LOCOMOTIVE" />
-      </div>
     </section>
   );
 };
 
-export default SideFilters;
+export default GenderFilter;
