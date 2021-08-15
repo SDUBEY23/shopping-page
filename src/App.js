@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import ProductList from "./components/ProductList";
+import ProductList from "./components/ProductList/ProductList";
 import Header from "./components/Navbar/Header";
 import GenderFilter from "./components/SideFilters/GenderFilter";
 import CategoryFilter from "./components/SideFilters/CategoryFilter";
@@ -28,24 +28,7 @@ function App() {
     }
     fetchProducts();
   }, []);
-  // console.log(productList);
 
-  // const handleFilters = (filters, category) => {
-  //   let newProductList = [...productList];
-  //   console.log(newProductList);
-  //   if (filters.length === 0) {
-  //     setProductList(productList);
-  //   } else {
-  //     console.log(filters);
-  //     const newFilter = { ...sideFilter };
-  //     newFilter[category] = filters;
-  //     setSideFilder(newFilter);
-  //     console.log(sideFilter);
-  //     return setProductList(
-  //       productList.filter((x) => x.gender.includes(filters))
-  //     );
-  //   }
-  // };
   const handleGenderFilters = (filters, category) => {
     setSearch(true);
     if (filters.length !== 0) {
@@ -56,7 +39,6 @@ function App() {
         // return x.gender.includes(filters);
         return Object.values(product.gender).join("").includes(filters);
       });
-      console.log(newFilteredProductList);
       setSearchResult(newFilteredProductList);
     } else {
       setSearchResult(productList);
@@ -70,10 +52,8 @@ function App() {
       newFilter[category] = filters;
       setSideFilder(newFilter);
       const newFilteredProductList = productList.filter((product) => {
-        // return x.gender.includes(filters);
         return Object.values(product.category).join("").includes(filters);
       });
-      console.log(newFilteredProductList);
       setSearchResult(newFilteredProductList);
     } else {
       setSearchResult(productList);
@@ -86,10 +66,8 @@ function App() {
       newFilter[category] = filters;
       setSideFilder(newFilter);
       const newFilteredProductList = productList.filter((product) => {
-        // return x.gender.includes(filters);
         return Object.values(product.brand).join("").includes(filters);
       });
-      console.log(newFilteredProductList);
       setSearchResult(newFilteredProductList);
     } else {
       setSearchResult(productList);
@@ -103,7 +81,6 @@ function App() {
       const newProductList = productList.filter((x) =>
         x.product.toLowerCase().includes(searchProduct.toLowerCase())
       );
-      console.log(newProductList);
       setSearchResult(newProductList);
     } else {
       setSearchResult(productList);
