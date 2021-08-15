@@ -23,7 +23,7 @@ const Header = ({ term, searchKeyword }) => {
           ref={inputEl}
           type="text"
           className="header__searchBar"
-          placeholder="Search for products"
+          placeholder="Search for products, brands"
           value={term}
           onChange={getSearchedProducts}
         />

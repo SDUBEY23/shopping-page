@@ -35,6 +35,7 @@ const SideFilters = (props) => {
                     value={item}
                     onChange={() => handleToggle(item)}
                     checked={checked.indexOf(item) === -1 ? false : true}
+                    filterType="gender"
                   />
                   {item}
                 </label>

@@ -9,8 +9,11 @@ function App() {
   const [productList, setProductList] = useState([]);
   const [searchProduct, setSearchProduct] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [search, setSearch] = useState(false);
   const [sideFilter, setSideFilder] = useState({
     gender: [],
+    category: [],
+    brand: [],
   });
 
   useEffect(() => {
@@ -25,44 +28,43 @@ function App() {
   }, []);
   // console.log(productList);
 
-  // const handleSearch = (e) => {
+  // const handleFilters = (filters, category) => {
   //   let newProductList = [...productList];
   //   console.log(newProductList);
-  //   if (e.target.value === "") {
-  //     return setProductList(productList);
+  //   if (filters.length === 0) {
+  //     setProductList(productList);
   //   } else {
+  //     console.log(filters);
+  //     const newFilter = { ...sideFilter };
+  //     newFilter[category] = filters;
+  //     setSideFilder(newFilter);
+  //     console.log(sideFilter);
   //     return setProductList(
-  //       newProductList.filter((x) => x.product.includes(e.target.value))
+  //       productList.filter((x) => x.gender.includes(filters))
   //     );
   //   }
   // };
-
   const handleFilters = (filters, category) => {
-    let newProductList = [...productList];
-    console.log(newProductList);
-    if (filters.length === 0) {
-      setProductList(productList);
-    } else {
-      console.log(filters);
+    setSearch(true);
+    if (filters.length !== 0) {
       const newFilter = { ...sideFilter };
       newFilter[category] = filters;
       setSideFilder(newFilter);
-      console.log(sideFilter);
-      return setProductList(
-        productList.filter((x) => x.gender.includes(filters))
-      );
+      const newFilteredProductList = productList.filter((product) => {
+        // return x.gender.includes(filters);
+        return Object.values(product.gender).join("").includes(filters);
+      });
+      console.log(newFilteredProductList);
+      setSearchResult(newFilteredProductList);
+    } else {
+      setSearchResult(productList);
     }
   };
 
   const searchHandler = (searchProduct) => {
+    setSearch(false);
     setSearchProduct(searchProduct);
     if (searchProduct !== "") {
-      // const newProductList = productList.filter((product) => {
-      //   return Object.values(product.product)
-      //     .join("")
-      //     .toLocaleLowerCase()
-      //     .includes(searchProduct.toLocaleLowerCase());
-      // });
       const newProductList = productList.filter((x) =>
         x.product.toLowerCase().includes(searchProduct.toLowerCase())
       );
@@ -74,17 +76,19 @@ function App() {
   };
   return (
     <div className="App">
-      <Header
-        // onChange={(e) => handleSearch(e)}
-        term={searchProduct}
-        searchKeyword={searchHandler}
-      />
+      <Header term={searchProduct} searchKeyword={searchHandler} />
       <SideFilters
         handleFilters={(filters) => handleFilters(filters, "gender")}
       />
-      <ProductList
-        list={searchProduct.length < 1 ? productList : searchResult}
-      />
+      {search ? (
+        <ProductList
+          list={sideFilter.length < 1 ? productList : searchResult}
+        />
+      ) : (
+        <ProductList
+          list={searchProduct.length < 1 ? productList : searchResult}
+        />
+      )}
     </div>
   );
 }
