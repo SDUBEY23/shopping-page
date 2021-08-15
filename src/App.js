@@ -7,6 +7,8 @@ import SideFilters from "./components/SideFilters/SideFilters";
 
 function App() {
   const [productList, setProductList] = useState([]);
+  const [searchProduct, setSearchProduct] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const [sideFilter, setSideFilder] = useState({
     gender: [],
   });
@@ -21,19 +23,19 @@ function App() {
     }
     fetchProducts();
   }, []);
-  console.log(productList);
+  // console.log(productList);
 
-  const handleSearch = (e) => {
-    let newProductList = [...productList];
-    console.log(newProductList);
-    if (e.target.value === "") {
-      return setProductList(productList);
-    } else {
-      return setProductList(
-        newProductList.filter((x) => x.product.includes(e.target.value))
-      );
-    }
-  };
+  // const handleSearch = (e) => {
+  //   let newProductList = [...productList];
+  //   console.log(newProductList);
+  //   if (e.target.value === "") {
+  //     return setProductList(productList);
+  //   } else {
+  //     return setProductList(
+  //       newProductList.filter((x) => x.product.includes(e.target.value))
+  //     );
+  //   }
+  // };
 
   const handleFilters = (filters, category) => {
     let newProductList = [...productList];
@@ -51,13 +53,38 @@ function App() {
       );
     }
   };
+
+  const searchHandler = (searchProduct) => {
+    setSearchProduct(searchProduct);
+    if (searchProduct !== "") {
+      // const newProductList = productList.filter((product) => {
+      //   return Object.values(product.product)
+      //     .join("")
+      //     .toLocaleLowerCase()
+      //     .includes(searchProduct.toLocaleLowerCase());
+      // });
+      const newProductList = productList.filter((x) =>
+        x.product.toLowerCase().includes(searchProduct.toLowerCase())
+      );
+      console.log(newProductList);
+      setSearchResult(newProductList);
+    } else {
+      setSearchResult(productList);
+    }
+  };
   return (
     <div className="App">
-      <Header onChange={(e) => handleSearch(e)} />
+      <Header
+        // onChange={(e) => handleSearch(e)}
+        term={searchProduct}
+        searchKeyword={searchHandler}
+      />
       <SideFilters
         handleFilters={(filters) => handleFilters(filters, "gender")}
       />
-      <ProductList list={productList} />
+      <ProductList
+        list={searchProduct.length < 1 ? productList : searchResult}
+      />
     </div>
   );
 }
